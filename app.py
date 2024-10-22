@@ -7,6 +7,19 @@ app = Flask(__name__)
 
 # == Your Routes Here ==
 
+@app.route('/emoji', methods=['GET'])
+def get_emoji():
+    return render_template('emoji.html', emoji=':)')
+
+@app.route('/goodbye', methods=['GET'])
+def get_goobye():
+    return render_template('goodbye.html')
+
+@app.route('/greet')
+def greet():
+    name = request.args.get('name')
+    return render_template('greet.html', name=name)
+
 
 
 # These lines start the server if you run this file directly
