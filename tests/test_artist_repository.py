@@ -23,6 +23,14 @@ def test_get_single_artist(db_connection):
 
     assert artist == Artist('Korn', 'Metal')
 
+def test_get_artist_by_name(db_connection): 
+    db_connection.seed("seeds/music_tables.sql") 
+    repository = ArtistRepository(db_connection) 
+
+    artist = repository.search_by_name('Korn') 
+
+    assert artist == Artist('Korn', 'Metal', 1)
+
 
 def test_create_artist(db_connection):
     db_connection.seed("seeds/music_tables.sql")

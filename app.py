@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.album_repository import AlbumRepository
 from lib.album import Album
@@ -29,17 +29,52 @@ def get_single_album(album_id):
     return render_template('single_album.html',single_album=single_album, single_artist=single_artist)
 
 
+
+@app.route('/albums/new', methods=['GET'])
+def get_new_album():
+            return render_template('album_new.html')
+
 @app.route('/albums', methods=['POST'])
-def post_album():
-    connection = get_flask_database_connection(app) 
+def create_album():
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    artist_repository = ArtistRepository(connection)
+
     title = request.form['title']
     release_year = request.form['release_year']
-    artist = request.form['artist_id']
-    repository = AlbumRepository(connection)
+    artist_name = request.form['artist_name']
+    artist = artist_repository.search_by_name(artist_name)
 
-    repository.create(Album(title, release_year, artist))
+    album = Album(title, release_year, artist.id)
 
-    return 'Created'
+    if not album.is_valid():
+        return render_template('albums/new.html', album=album, errors=album.generate_errors()), 400
+
+    album = repository.create(album)
+
+    return redirect(f"/albums/{album.id}")
+
+@app.route('/artists/new', methods=['GET'])
+def get_new_artist():
+            return render_template('artist_new.html')
+
+@app.route('/artists', methods=['POST'])
+def create_artist():
+    connection = get_flask_database_connection(app)
+    repository = ArtistRepository(connection)
+
+    name = request.form['name']
+    genre = request.form['genre']
+
+    artist = Artist(name, genre)
+
+    if not artist.is_valid():
+        return render_template('artists/new.html', artist=artist, errors=artist.generate_errors()), 400
+
+    artist = repository.create(artist)
+
+    return redirect(f"/artists/{artist.id}")
+
 
 @app.route('/artists', methods=['POST'])
 def post_artist():

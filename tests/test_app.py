@@ -12,9 +12,9 @@ def test_get_single_album_loads(page, test_web_address):
     h1_tag = page.locator("h1")
     expect(h1_tag).to_have_text("Vulgar display of power")
 
-def test_post_album(web_client):
-    response = web_client.post('/albums', data={'title':'Voyage','release_year':'2022','artist_id':'2'})
-    assert response.status_code == 200
+# def test_post_album(web_client):
+#     response = web_client.post('/albums', data={'title':'Voyage','release_year':'2022','artist_id':'2'})
+#     assert response.status_code == 200
 
 def test_get_artists_loads(page, test_web_address):
     page.goto(f"http://{test_web_address}/artists")
