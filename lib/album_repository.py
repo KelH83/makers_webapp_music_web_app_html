@@ -9,7 +9,7 @@ class AlbumRepository:
         rows = self._connection.execute('SELECT * from albums')
         albums = []
         for row in rows:
-            item = Album(row["title"], row["release_year"],row["artist_id"])
+            item = Album(row["title"], row["release_year"],row["artist_id"], row["id"])
             albums.append(item)
         return albums
     

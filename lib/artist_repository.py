@@ -9,7 +9,7 @@ class ArtistRepository:
         rows = self._connection.execute('SELECT * from artists')
         artists = []
         for row in rows:
-            item = Artist(row["name"], row["genre"])
+            item = Artist(row["name"], row["genre"], row["id"])
             artists.append(item)
         return artists
     

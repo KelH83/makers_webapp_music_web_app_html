@@ -9,10 +9,10 @@ def test_get_all_artists(db_connection):
     artists = repository.all() 
 
     assert artists == [
-        Artist('Korn', 'Metal'),
-        Artist('Pantera', 'Metal'),
-        Artist('Type O Negative', 'Metal'),
-        Artist('Pentatonix', 'Pop')
+        Artist('Korn', 'Metal',1),
+        Artist('Pantera', 'Metal',2),
+        Artist('Type O Negative', 'Metal',3),
+        Artist('Pentatonix', 'Pop',4)
     ]
 
 def test_get_single_artist(db_connection): 
@@ -32,9 +32,9 @@ def test_create_artist(db_connection):
 
     result = repository.all()
     assert result == [
-        Artist('Korn', 'Metal'),
-        Artist('Pantera', 'Metal'),
-        Artist('Type O Negative', 'Metal'),
-        Artist('Pentatonix', 'Pop'),
-        Artist('Slayer', 'Metal')
+        Artist('Korn', 'Metal',1),
+        Artist('Pantera', 'Metal',2),
+        Artist('Type O Negative', 'Metal',3),
+        Artist('Pentatonix', 'Pop',4),
+        Artist('Slayer', 'Metal',5)
     ]

@@ -58,16 +58,6 @@ def post_album():
 
     return 'Created'
 
-@app.route('/artists', methods=['GET'])
-def get_artist():
-    connection = get_flask_database_connection(app) 
-    repository = ArtistRepository(connection)
-    all_artists = repository.all()
-    return_list = []
-    for artist in all_artists:
-        return_list.append(str(artist))
-    return return_list
-
 @app.route('/artists', methods=['POST'])
 def post_artist():
     connection = get_flask_database_connection(app) 
@@ -78,6 +68,24 @@ def post_artist():
     repository.create(Artist(name, genre))
 
     return 'Created'
+
+@app.route('/artists', methods=['GET'])
+def get_artists():
+    connection = get_flask_database_connection(app) 
+    repository = ArtistRepository(connection)
+    all_artists = repository.all()
+    return_list = []
+    for artist in all_artists:
+        return_list.append(artist)
+    return render_template('artists.html',return_list=return_list)
+
+@app.route('/artists/<int:artist_id>', methods=['GET'])
+def get_single_artist(artist_id):
+    connection = get_flask_database_connection(app) 
+    repository = ArtistRepository(connection)
+    single_artist = repository.single_artist(artist_id)
+
+    return render_template('single_artist.html', single_artist=single_artist)
 
 
 # These lines start the server if you run this file directly
