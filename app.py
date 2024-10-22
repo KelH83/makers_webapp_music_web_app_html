@@ -6,24 +6,7 @@ from lib.album import Album
 from lib.artist import Artist
 from lib.artist_repository import ArtistRepository
 
-
-# Create a new Flask app
 app = Flask(__name__)
-
-# == Your Routes Here ==
-
-@app.route('/emoji', methods=['GET'])
-def get_emoji():
-    return render_template('emoji.html', emoji=':)')
-
-@app.route('/goodbye', methods=['GET'])
-def get_goobye():
-    return render_template('goodbye.html')
-
-@app.route('/greet')
-def greet():
-    name = request.args.get('name')
-    return render_template('greet.html', name=name)
 
 @app.route('/albums', methods=['GET'])
 def get_albums():
